@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Image, Picker, StyleSheet, Text, TextInput, View } from 'react-native';
+import { CheckBox, Image, Picker, StyleSheet, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-web';
 
 export default function App() {
@@ -10,6 +10,8 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [hobby, setHobby] = useState("");
   const [hobbiesSelecionados, setHobbiesSelecionados] = useState([]);
+  const [aceitamentoDosTermos, setAceitamentoDosTermos] = useState(false);
+  const [corAceito] = "#00ff00";
 
   return (
     <View style={styles.body}>
@@ -24,9 +26,11 @@ export default function App() {
       </View>
       <View style={styles.container}>
         <Text style={styles.texto}>Outras Informações</Text>
-        <Picker selectedvalue={selectedvalue} onValueChange={((itemValue) => setHobbiesSelecionados(itemValue))}>
-          <Picker.item label="Programar" value="Programar" />
-        </Picker>
+        <Picker style={styles.picker} label="Programar" value="Programar" />
+        <View style={styles.checkBoxLabel}>
+          <CheckBox style={styles.checkBox} value={aceitamentoDosTermos} onValueCharge={setAceitamentoDosTermos} color={aceitamentoDosTermos ? corAceito : undefined} />
+          <Text style={styles.textoPequeno}>Aceita os termos de Serviço</Text>
+        </View>
       </View>
       <View style={styles.container}>
         <Text style={styles.texto}>Nome: {nome}</Text>
@@ -34,7 +38,7 @@ export default function App() {
         <Text style={styles.texto}>Endereço: {endereco}</Text>
         <Text style={styles.texto}>Email: {email}</Text>
         <Text style={styles.texto}>Hobby:</Text>
-        <Text style={styles.texto}>Aceito:</Text>
+        <Text style={styles.texto}>Aceito: {aceitamentoDosTermos ? "👍" : "👎"}</Text>
       </View>
     </View>
 
@@ -50,15 +54,17 @@ const styles = StyleSheet.create({
   },
   container: {
     borderColor: "#000",
+    width: "95%",
     marginTop: 20,
+    marginHorizontal: "2.5%",
     borderWidth: 3,
     borderRadius: 20,
     padding: 10,
     paddingTop: 20,
   },
   imagem: {
-    width: 128,
-    height: 128,
+    width: 192,
+    height: 192,
     justifyContent: "flex-start",
     margin: 10,
     borderRadius: 50,
@@ -76,4 +82,25 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 7,
   },
+  picker: {
+    color: "#404040",
+    borderColor: "#808080",
+    fontSize: 13,
+    marginTop: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+  },
+  checkBoxLabel: {
+    marginTop: 10,
+    flexDirection: "row",
+    textAlign: "center"
+  },
+  checkBox: {
+    marginRight: 5,
+  },
+  textoPequeno: {
+    color: "#404040",
+    fontSize: 13,
+  },
 });
+
